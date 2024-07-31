@@ -10,8 +10,10 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
-  final _formKey = GlobalKey<FormBuilderState>();
-  final _emailFieldKey = GlobalKey<FormBuilderFieldState>();
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderFieldState<FormBuilderField<String>, dynamic>>
+      _emailFieldKey =
+      GlobalKey<FormBuilderFieldState<FormBuilderField<String>, dynamic>>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,12 @@ class _SignupFormState extends State<SignupForm> {
       child: FormBuilder(
         key: _formKey,
         child: Column(
-          children: [
+          children: <Widget>[
             FormBuilderTextField(
               name: 'full_name',
               decoration: const InputDecoration(labelText: 'Full Name'),
-              validator: FormBuilderValidators.compose([
+              validator:
+                  FormBuilderValidators.compose(<FormFieldValidator<String>>[
                 FormBuilderValidators.required(),
               ]),
             ),
@@ -32,7 +35,8 @@ class _SignupFormState extends State<SignupForm> {
               key: _emailFieldKey,
               name: 'email',
               decoration: const InputDecoration(labelText: 'Email'),
-              validator: FormBuilderValidators.compose([
+              validator:
+                  FormBuilderValidators.compose(<FormFieldValidator<String>>[
                 FormBuilderValidators.required(),
                 FormBuilderValidators.email(),
               ]),
@@ -42,7 +46,8 @@ class _SignupFormState extends State<SignupForm> {
               name: 'password',
               decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
-              validator: FormBuilderValidators.compose([
+              validator:
+                  FormBuilderValidators.compose(<FormFieldValidator<String>>[
                 FormBuilderValidators.required(),
                 FormBuilderValidators.minLength(6),
               ]),
@@ -60,7 +65,7 @@ class _SignupFormState extends State<SignupForm> {
                     : const Icon(Icons.check, color: Colors.green),
               ),
               obscureText: true,
-              validator: (value) =>
+              validator: (String? value) =>
                   _formKey.currentState?.fields['password']?.value != value
                       ? 'No coinciden'
                       : null,
@@ -68,7 +73,8 @@ class _SignupFormState extends State<SignupForm> {
             const SizedBox(height: 10),
             FormBuilderFieldDecoration<bool>(
               name: 'test',
-              validator: FormBuilderValidators.compose([
+              validator:
+                  FormBuilderValidators.compose(<FormFieldValidator<bool>>[
                 FormBuilderValidators.required(),
                 FormBuilderValidators.equal(true),
               ]),
